@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { homePageData } from "../data/homePageData";
 
 const MobileAccessories = () => {
-  const { accessoriesSection } = homePageData;
+  const { accessoriesSection, contactSection } = homePageData;
 
   const accessoryImageMap = {
     "back-covers": backCover,
@@ -17,6 +17,12 @@ const MobileAccessories = () => {
     "usb-cables": usbCables,
     "earphones-earbuds": earphones,
     "power-banks": powerBank,
+  };
+
+  const handleCheckAvailability = (itemName) => {
+    const message = `Hi, I want to check availability for ${itemName}.`;
+    const whatsappUrl = `${contactSection.whatsapp.href}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -50,6 +56,7 @@ const MobileAccessories = () => {
 
             <button
               type="button"
+              onClick={() => handleCheckAvailability(item.name)}
               className="inline-flex items-center gap-2 rounded-lg bg-brand-dark px-md py-sm text-label-l font-semibold text-neutral-100 hover:bg-brand-dark/90 transition cursor-pointer"
             >
               {accessoriesSection.ctaLabel}

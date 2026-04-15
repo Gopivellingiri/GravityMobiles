@@ -93,7 +93,7 @@ export const homePageData = {
     id: "accessories",
     title: "Popular Mobile Accessories",
     subtitle: "Quality accessories available for all major mobile brands.",
-    ctaLabel: "Available Now",
+    ctaLabel: "Check Availability",
     items: [
       {
         id: "back-covers",

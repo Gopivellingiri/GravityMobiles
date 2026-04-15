@@ -8,9 +8,10 @@ const { contactSection } = homePageData;
 const { form } = contactSection;
 
 const Contact = () => {
-  const apiBaseUrl = import.meta.env.DEV
-    ? ""
-    : (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(
+    /\/$/,
+    "",
+  );
   const initialState = Object.fromEntries(
     form.fields.map((field) => [field.id, ""]),
   );

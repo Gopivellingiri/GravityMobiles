@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Space+Grotesk:wght@300..700&display=swap");
+@import "tailwindcss";
+
+/********** Global Styles **********/
+
+@theme {
+  /* Brand colors */
+  --color-brand-primary: #337ec1;
+  --color-brand-dark: #1a1e2e;
+
+  --color-neutral-100: #ffffff;
+  --color-neutral-200: #f8fafc;
+  --color-neutral-300: #e5e7eb;
+  --color-neutral-400: #6b7280;
+  --color-neutral-500: #111827;
+
+  /* Font families */
+  --font-manrope: "Manrope", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+
+  /* Spacing tokens */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 80px;
+  --spacing-5xl: 96px;
+
+  /* Typography scale */
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+
+  --text-overline: 11px;
+  --text-overline--line-height: 16px;
+
+  --text-display-l: 40px;
+  --text-display-l--line-height: 48px;
+  --text-display-m: 32px;
+  --text-display-m--line-height: 40px;
+
+  --text-h1: 28px;
+  --text-h1--line-height: 35px;
+  --text-h2: 24px;
+  --text-h2--line-height: 32px;
+  --text-h3: 20px;
+  --text-h3--line-height: 28px;
+
+  --text-title-l: 18px;
+  --text-title-l--line-height: 26px;
+  --text-title-m: 16px;
+  --text-title-m--line-height: 24px;
+
+  --text-body-l: 16px;
+  --text-body-l--line-height: 24px;
+  --text-body-m: 14px;
+  --text-body-m--line-height: 22px;
+  --text-body-s: 13px;
+  --text-body-s--line-height: 20px;
+
+  --text-label-l: 14px;
+  --text-label-l--line-height: 20px;
+  --text-label-m: 12px;
+  --text-label-m--line-height: 16px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  :target {
+    scroll-margin-top: 96px;
+  }
+
+  body {
+    font-family: var(--font-manrope);
+    color: theme(colors.neutral-200);
+    background-color: theme(colors.neutral-200);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-space);
+  }
+}

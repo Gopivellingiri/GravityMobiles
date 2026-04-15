@@ -7,10 +7,10 @@ import { X } from "lucide-react";
 
 const BookServiceModal = ({ onClose }) => {
   const { bookServiceForm } = homePageData;
-  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(
-    /\/$/,
-    "",
-  );
+  const apiBaseUrl = (
+    import.meta.env.VITE_API_BASE_URL ||
+    (import.meta.env.DEV ? "" : "https://gravitymobiles.onrender.com")
+  ).replace(/\/$/, "");
 
   const initialState = Object.fromEntries(
     bookServiceForm.fields.map((f) => [f.id, ""]),

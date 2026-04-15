@@ -33,7 +33,7 @@ export const homePageData = {
       {
         id: "chat-whatsapp",
         label: "Chat On Whatsapp",
-        href: "https://wa.me/6383373706",
+        href: "https://wa.me/916383373706",
         variant: "dark",
       },
     ],
@@ -203,10 +203,10 @@ export const homePageData = {
       "Get in touch for quick service, genuine accessories, and same-day mobile repair support.",
     address:
       "2/27C, Shop No. 3 Sai Rahul Complex, Sangothipalayam, Kaniyur, Coimbatore - 641 659",
-    phone: "+91 63833 73706",
+    phone: "+91   63833 73706",
     whatsapp: {
       label: "Chat On Whatsapp",
-      href: "https://wa.me/916383737706",
+      href: "https://wa.me/916383373706",
     },
     form: {
       fields: [
@@ -308,12 +308,12 @@ export const homePageData = {
       { label: "Reviews", href: "#reviews" },
       { label: "Contact", href: "#contact" },
     ],
-    phone: "+91 63833 73706",
+    phone: "+91  63833 73706",
     address:
       "2/27C, Shop No. 3 Sai Rahul Complex, Sangothipalayam, Kaniyur, Coimbatore - 641 659",
     whatsapp: {
       label: "Chat On Whatsapp",
-      href: "https://wa.me/916383737706",
+      href: "https://wa.me/916383373706",
     },
   },
 };

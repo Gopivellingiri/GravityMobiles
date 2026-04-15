@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Home from "../features/Home";
 import Header from "../shared/Header";
 import heroImage from "../assets/hero.png";
@@ -13,6 +13,8 @@ import Map from "../features/Map";
 import Footer from "../features/Footer";
 
 const AllPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div>
       <div
@@ -22,8 +24,8 @@ const AllPage = () => {
           backgroundImage: `url(${heroImage})`,
         }}
       >
-        <Header />
-        <Home />
+        <Header onBookService={() => setIsModalOpen(true)} />
+        <Home onBookService={() => setIsModalOpen(true)} />
       </div>
       <Layout>
         <MobileServices />
@@ -34,6 +36,10 @@ const AllPage = () => {
         <Map />
       </Layout>
       <Footer />
+
+      {isModalOpen && (
+        <BookServiceModal onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 };

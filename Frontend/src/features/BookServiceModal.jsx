@@ -1,24 +1,45 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { homePageData } from "../data/homePageData";
+import { X } from "lucide-react";
 
 const BookServiceModal = ({ onClose }) => {
   const { bookServiceForm } = homePageData;
+  const apiBaseUrl = import.meta.env.DEV
+    ? ""
+    : (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 
   const initialState = Object.fromEntries(
     bookServiceForm.fields.map((f) => [f.id, ""]),
   );
   const [formData, setFormData] = useState(initialState);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: connect to backend / WhatsApp / email
-    console.log("Book Service submission:", formData);
-    onClose();
+
+    setIsSubmitting(true);
+
+    try {
+      await axios.post(`${apiBaseUrl}/api/bookings`, formData);
+      toast.success(
+        "Booking submitted successfully. We will contact you soon.",
+      );
+      onClose();
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to submit booking. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Close on backdrop click
@@ -69,10 +90,10 @@ const BookServiceModal = ({ onClose }) => {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 text-neutral-400 transition hover:text-neutral-700"
+          className="absolute right-4 top-4 text-neutral-400 transition hover:text-neutral-700 cursor-pointer"
           aria-label="Close"
         >
-          x
+          <X size={20} />
         </button>
 
         <h2
@@ -129,7 +150,8 @@ const BookServiceModal = ({ onClose }) => {
                   placeholder={field.placeholder}
                   value={formData[field.id]}
                   onChange={handleChange}
-                  required={field.id !== "message"}
+                  required={field.required ?? field.id !== "message"}
+                  autoComplete={field.type === "email" ? "email" : undefined}
                   className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-body-s text-neutral-700 outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary"
                 />
               )}
@@ -138,9 +160,10 @@ const BookServiceModal = ({ onClose }) => {
 
           <button
             type="submit"
-            className="mt-2 rounded-lg bg-brand-primary px-md py-sm text-label-l font-semibold text-neutral-100 transition hover:brightness-95"
+            disabled={isSubmitting}
+            className="mt-2 rounded-lg bg-brand-primary px-md py-sm text-label-l font-semibold text-neutral-100 transition hover:brightness-95 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {bookServiceForm.submitLabel}
+            {isSubmitting ? "Submitting..." : bookServiceForm.submitLabel}
           </button>
         </form>
       </div>

@@ -4,7 +4,7 @@ import Layout from "./Layout";
 import { Menu } from "lucide-react";
 import LogoBlack from "../assets/logo-black.png";
 
-const Header = () => {
+const Header = ({ onBookService }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -97,6 +97,7 @@ const Header = () => {
             <button
               className="hidden md:inline-block rounded-lg bg-brand-primary px-4 py-2 text-sm font-semibold text-neutral-100 transition hover:brightness-95"
               type="button"
+              onClick={onBookService}
             >
               Book Service
             </button>
@@ -117,7 +118,7 @@ const Header = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed inset-0 z-[60] bg-brand-dark/40 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-60 bg-brand-dark/40 transition-opacity duration-300 md:hidden ${
           isMobileMenuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -162,7 +163,10 @@ const Header = () => {
           <button
             className="mt-10 rounded-lg bg-brand-dark px-5 py-2 text-title-m font-medium text-neutral-100"
             type="button"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              onBookService?.();
+            }}
           >
             Book Service
           </button>

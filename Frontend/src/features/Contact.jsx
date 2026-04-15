@@ -1,3 +1,6 @@
+import { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { FaWhatsapp } from "react-icons/fa6";
 import { homePageData } from "../data/homePageData";
 
@@ -5,6 +8,61 @@ const { contactSection } = homePageData;
 const { form } = contactSection;
 
 const Contact = () => {
+  const apiBaseUrl = import.meta.env.DEV
+    ? ""
+    : (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+  const initialState = Object.fromEntries(
+    form.fields.map((field) => [field.id, ""]),
+  );
+
+  const [formData, setFormData] = useState(initialState);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = () => {
+    const missingField = form.fields.find((field) => {
+      const isRequired = field.required ?? true;
+      if (!isRequired) return false;
+      return !String(formData[field.id] ?? "").trim();
+    });
+
+    if (missingField) {
+      toast.error(`${missingField.label} is required.`);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    const payload = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, value.trim()]),
+    );
+
+    try {
+      await axios.post(`${apiBaseUrl}/api/contact`, payload);
+      toast.success("Message sent successfully. We will contact you soon.");
+      setFormData(initialState);
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to send message. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id={contactSection.id} className="mt-5xl">
       {/* Outer card on neutral-300 background */}
@@ -56,7 +114,8 @@ const Contact = () => {
           {/* Right — contact form */}
           <div className="rounded-2xl bg-brand-dark p-lg md:w-1/2 md:p-xl">
             <form
-              onSubmit={(e) => e.preventDefault()}
+              noValidate
+              onSubmit={handleSubmit}
               className="flex flex-col gap-md"
             >
               {form.fields.map((field) =>
@@ -72,6 +131,8 @@ const Contact = () => {
                       id={field.id}
                       name={field.id}
                       placeholder={field.placeholder}
+                      value={formData[field.id]}
+                      onChange={handleChange}
                       rows={5}
                       className="w-full resize-none rounded-xl bg-neutral-100 px-md py-sm text-body-m text-neutral-500 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-primary"
                     />
@@ -89,6 +150,8 @@ const Contact = () => {
                       name={field.id}
                       type={field.type}
                       placeholder={field.placeholder}
+                      value={formData[field.id]}
+                      onChange={handleChange}
                       className="w-full rounded-xl bg-neutral-100 px-md py-sm text-body-m text-neutral-500 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-primary"
                     />
                   </div>
@@ -97,9 +160,10 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="mt-xs w-fit rounded-xl bg-brand-primary px-lg py-sm text-label-l font-semibold text-neutral-100 transition hover:brightness-110"
+                disabled={isSubmitting}
+                className="mt-xs w-fit rounded-xl bg-brand-primary px-lg py-sm text-label-l font-semibold text-neutral-100 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {form.submitLabel}
+                {isSubmitting ? "Sending..." : form.submitLabel}
               </button>
             </form>
           </div>

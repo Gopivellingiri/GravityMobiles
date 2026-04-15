@@ -1,15 +1,12 @@
-import { useState } from "react";
 import Layout from "../shared/Layout";
 import { homePageData } from "../data/homePageData";
-import BookServiceModal from "./BookServiceModal";
 import { MousePointerClick } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import MobileServices from "./MobileServices";
 import MobileAccessories from "./MobileAccessories";
 
-const Home = () => {
+const Home = ({ onBookService }) => {
   const { hero } = homePageData;
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Layout>
@@ -26,7 +23,7 @@ const Home = () => {
                 <button
                   key={action.id}
                   type="button"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={onBookService}
                   className={`rounded-lg px-md py-sm text-label-l font-semibold text-neutral-100 transition hover:brightness-95 flex items-center gap-2 cursor-pointer ${
                     action.variant === "primary"
                       ? "bg-brand-primary"
@@ -56,10 +53,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {isModalOpen && (
-        <BookServiceModal onClose={() => setIsModalOpen(false)} />
-      )}
     </Layout>
   );
 };

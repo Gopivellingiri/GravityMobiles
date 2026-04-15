@@ -255,6 +255,13 @@ export const homePageData = {
         placeholder: "Enter your name",
       },
       {
+        id: "email",
+        label: "Email",
+        type: "email",
+        placeholder: "Enter your email",
+        required: true,
+      },
+      {
         id: "phone",
         label: "Phone Number",
         type: "tel",
@@ -286,6 +293,7 @@ export const homePageData = {
         label: "Additional Details",
         type: "textarea",
         placeholder: "Describe the issue (optional)",
+        required: false,
       },
     ],
     submitLabel: "Book Now",
